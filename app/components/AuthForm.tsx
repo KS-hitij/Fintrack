@@ -95,6 +95,7 @@ export default function AuthForm({ type }: { type: string }) {
     const handleContinueGoogle = async()=>{
         const res  = await signIn("google",{
             redirect:false,
+            callbackUrl:"/dashboard"
         });
         if(res?.error){
             setToastMessage(res.error.toUpperCase());
@@ -102,7 +103,6 @@ export default function AuthForm({ type }: { type: string }) {
             setTimeout(()=>setToast(false),1500);
             return;
         }
-        router.push("/");
     }
     return (
         <form className="bg-base-100 w-full md:w-[25%] h-full md:h-120 flex flex-col gap-y-7 py-10 items-center rounded-4xl justify-center">

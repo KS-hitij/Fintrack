@@ -112,10 +112,27 @@ const AuthOptions: NextAuthOptions = {
                 return true;
             }
             return true;
-        }
+        },
+        async jwt({token,user}){
+            if(user){
+                token.name = user.name;
+                token.email = user.email;
+            }
+            return token;
+        },
+        async session({session,token}){
+            if(token && session.user){
+                session.user.email = token.email;
+                session.user.name = token.name
+            }
+            return session;
+        },
     },
     pages: {
         error: "/auth/error",
+    },
+    session:{
+        strategy:"jwt"
     }
 
 }

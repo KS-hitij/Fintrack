@@ -10,9 +10,24 @@ datasource db {
 model User{
   firstName String 
   lastName String
-  userId String @id @default(uuid())
+  id String @id @default(uuid())
   password String? 
   username String @unique
   email String @unique
   googleId String?
+  transactions Transaction[]
+}
+
+model Transaction{
+  id String @id @default(uuid())
+  amount Int
+  type TransactionType 
+  date DateTime @default(now())
+  userId String
+  user User @relation( fields: [userId] ,references: [id])
+  note String @default("")
+}
+enum TransactionType{
+  INCOME
+  EXPENDITURE
 }
