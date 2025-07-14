@@ -12,4 +12,4 @@ const userRegisterSchema = z.object({
     .refine(val=>!val.includes(" "),{message:"Password must not contain any spaces"})
 });
 
-export default userRegisterSchema
+export default userRegisterSchema;

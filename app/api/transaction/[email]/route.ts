@@ -2,13 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import transactionRegisterSchema from "@/app/lib/validation/transaction";
 import prisma from "@/app/lib/database/db";
 
-export async function POST(req:NextRequest){
+export async function POST(req:NextRequest,{ params }: { params: { email: string } }){
+    const {email} = await params;
     const data = await req.json();
     const isValid = transactionRegisterSchema.safeParse(data);
     if(isValid.success){
         const existingUser = await prisma.user.findFirst({
             where:{
-                id:isValid.data.userId
+             email:email   
             }
         });
         if(!existingUser){
@@ -24,5 +25,6 @@ export async function POST(req:NextRequest){
         })
         return NextResponse.json({message:"Success",status:200})
     }
-    return NextResponse.json({message:"Validation error fill values correctly",status:400});
+    
+    return NextResponse.json({message:(JSON.parse(isValid.error.message)[0].message),status:400});
 }
