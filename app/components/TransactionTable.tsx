@@ -1,6 +1,7 @@
 "use client";
 import { Transaction, TransactionType } from "@prisma/client";
 import { useEffect, useState } from "react";
+import Filters from "./Filters";
 
 export default function TransactionTable({ transactionsData, summary }: {
     transactionsData: Transaction[],
@@ -8,28 +9,13 @@ export default function TransactionTable({ transactionsData, summary }: {
 }) {
     const [transactions, setTransactions] = useState<Transaction[] | null>(null);
     useEffect(() => {
-        console.log(transactionsData);
         setTransactions(transactionsData);
     }, [transactionsData])
     return (
         <div className="transactions lg:px-[15%] mt-10">
             <h1 className="text-4xl lg:text-start text-center font-bold mb-2">Transactions</h1>
-            <p className="mb-3 text-center lg:text-start">You’ve added {summary.incomeCount} income and made {summary.expenseCount} expense this month.</p>
-            <div className="flex flex-col md:flex-row mb-3">
-                <div className="filter  gap-x-3.5 w-full">
-                    <input className="btn filter-reset" onClick={() => setTransactions(transactionsData)} type="radio" name="metaframeworks" aria-label="All" />
-                    <input className="btn" type="radio" onClick={() => filterDates(30, setTransactions, transactions)} name="metaframeworks" aria-label="Last 30 Days" />
-                    <input className="btn" type="radio" onClick={() => filterDates(60, setTransactions, transactions)} name="metaframeworks" aria-label="Last 60 Days" />
-                    <input className="btn" type="radio" onClick={() => filterDates(365, setTransactions, transactions)} name="metaframeworks" aria-label="Last 365 Days" />
-                </div>
-                <div className="filter  gap-x-3.5 w-full ">
-                    <input className="btn filter-reset" onClick={() => setTransactions(transactionsData)} type="radio" name="metaframeworks" aria-label="All" />
-                    <input className="btn" type="radio" onClick={() => filterDates(30, setTransactions, transactions)} name="metaframeworks" aria-label="Sort Amount Ascending" />
-                    <input className="btn" type="radio" onClick={() => filterDates(60, setTransactions, transactions)} name="metaframeworks" aria-label="Sort Amount Descending" />
-                    <input className="btn" type="radio" onClick={() => filterDates(365, setTransactions, transactions)} name="metaframeworks" aria-label="Sort Dates Ascending" />
-                    <input className="btn" type="radio" onClick={() => filterDates(365, setTransactions, transactions)} name="metaframeworks" aria-label="Sort Dates Descending" />
-                </div>
-            </div>
+            <p className="mb-3 text-center lg:text-start">You’ve added {summary.incomeCount} income and made {summary.expenseCount} expense till now.</p>
+            <Filters setTransactions={setTransactions} transactions={transactions} transactionsData={transactionsData} />
             <div className="w-full">
                 <div className="overflow-x-auto">
                     <table className="table">
@@ -62,15 +48,6 @@ export default function TransactionTable({ transactionsData, summary }: {
                     </table>
                 </div>
             </div>
-        </div>
+        </div >
     )
-}
-function filterDates(days: number, setTransactions, allTransactions: Transaction[] | null): void {
-    if (!allTransactions) return;
-    const now = Date.now();
-    const cutoff = now - days * 24 * 60 * 60 * 1000;
-    const filtered = allTransactions.filter(t => {
-        return new Date(t.date).getTime() >= cutoff;
-    });
-    setTransactions(filtered);
 }

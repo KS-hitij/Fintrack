@@ -1,9 +1,9 @@
 import Image from "next/image"
 export default function SummaryBoard({ summary }: { summary: { totalIncome: number, totalExpense: number } }) {
     return (
-        <div className="summary-info w-full mt-10 flex flex-col items-center justify-center h-62 gap-y-20 mb-12">
+        <div className="summary-info w-full mt-10 flex flex-col items-center justify-center h-62 gap-y-20 mb-18">
             <div className="flex flex-col gap-y-5 justify-around items-center">
-                <div className="flex flex-wrap gap-x-10 lg:gap-x-40 mb-8">
+                <div className="flex flex-wrap gap-x-4 md:gap-x-10 lg:gap-x-40 mb-8">
                     <div className="min-w-30 rounded-2xl cursor-pointer shadow-md p-5 hover:scale-105 transition-transform duration-300">
                         <h1 className="text-4xl font-bold text-green-500 mb-2">Income</h1>
                         <h3 className="flex items-center justify-center gap-x-2 text-center font-semibold text-2xl"><Image height={24} width={24} src={"/money_gain.png"} alt="money_lose" />{summary.totalIncome}</h3>

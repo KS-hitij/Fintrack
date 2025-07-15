@@ -31,9 +31,9 @@ export default async function Dashbord() {
     });
     const summary = getSummary({transactions});
     return (
-        <div className="min-h-screen max-w-screen flex flex-col">
+        <div className="min-h-screen max-w-full flex flex-col pb-8">
             <Navbar />
-            <br />
+            <br /> 
             <SummaryBoard summary={summary}/>
             <TransactionTable transactionsData={transactions} summary={summary}/>
         </div>
