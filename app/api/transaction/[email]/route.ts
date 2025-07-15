@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import transactionRegisterSchema from "@/app/lib/validation/transaction";
 import prisma from "@/app/lib/database/db";
 
-export async function POST(req:NextRequest,{ params }: { params: { email: string } }){
-    const {email} = await params;
+export async function POST(req:NextRequest,){
+    const email = req.nextUrl.pathname.split("/").pop();
     const data = await req.json();
     const isValid = transactionRegisterSchema.safeParse(data);
     if(isValid.success){
