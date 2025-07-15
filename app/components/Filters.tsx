@@ -2,7 +2,8 @@
 import { Transaction } from "@prisma/client";
 
 export default function Filters({ setTransactions, transactions, transactionsData }
-    : { setTransactions:any, transactions: Transaction[] | null, transactionsData: Transaction[] | null, }) {
+    : { setTransactions:React.Dispatch<React.SetStateAction<Transaction[] | null>>, 
+        transactions: Transaction[] | null, transactionsData: Transaction[] | null, }) {
 
     return (
         <div className="dropdown mb-8">
@@ -36,7 +37,8 @@ export default function Filters({ setTransactions, transactions, transactionsDat
     )
 }
 
-function filterDates(days: number, setTransactions:any, allTransactions: Transaction[] | null): void {
+function filterDates(days: number, setTransactions:React.Dispatch<React.SetStateAction<Transaction[] | null>>
+    , allTransactions: Transaction[] | null): void {
     if (!allTransactions) return;
     const now = Date.now();
     const cutoff = now - days * 24 * 60 * 60 * 1000;
@@ -46,7 +48,8 @@ function filterDates(days: number, setTransactions:any, allTransactions: Transac
     setTransactions(filtered);
 }
 
-function sortAscending(setTransactions:any, allTransactions: Transaction[] | null, type: string) {
+function sortAscending(setTransactions:React.Dispatch<React.SetStateAction<Transaction[] | null>>, 
+    allTransactions: Transaction[] | null, type: string) {
     if (type === "Amount" && allTransactions) {
         const sorted = [...allTransactions].sort((a, b) => a.amount - b.amount);
         setTransactions(sorted);
@@ -56,7 +59,8 @@ function sortAscending(setTransactions:any, allTransactions: Transaction[] | nul
         setTransactions(sorted);
     }
 }
-function sortDescending(setTransactions:any, allTransactions: Transaction[] | null, type: string) {
+function sortDescending(setTransactions:React.Dispatch<React.SetStateAction<Transaction[] | null>>, 
+    allTransactions: Transaction[] | null, type: string) {
     if (type === "Amount" && allTransactions) {
         const sorted = [...allTransactions].sort((a, b) => b.amount - a.amount);
         setTransactions(sorted);
