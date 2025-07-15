@@ -128,9 +128,6 @@ const AuthOptions: NextAuthOptions = {
             return session;
         },
     },
-    pages: {
-        error: "/auth/error",
-    },
     session:{
         strategy:"jwt"
     }
